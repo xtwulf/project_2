@@ -21,7 +21,7 @@
 /* getting all section elements for the menu */
 const menu_elements = document.querySelectorAll('section');
 
-
+var menu_element_ids = [];
 
 
 
@@ -55,14 +55,48 @@ for (let i=0; i < menu_elements.length; i++) {
     var textnode = document.createTextNode(menu_elements[i].getAttribute('data-nav'));
     node.appendChild(textnode);
     node.classList.add('menu__link');
+    node.setAttribute('id', 'nav'+i);
 
     menu.appendChild(node);
+    
+    menu_element_ids.push('section' + i);
 
 }
 
-console.log(menu);
 
 // Add class 'active' to section when near top of viewport
+
+
+
+function isElementInViewport(element) {
+    var rect = element.getBoundingClientRect();
+    return (
+     rect.top >= 0 &&
+     rect.left >= 0 &&
+     rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+   }
+   
+   var elements = document.querySelectorAll(".section");
+    
+   function callbackFunc() {
+    for (var i = 0; i < elements.length; i++) {
+     if (isElementInViewport(elements[i])) {
+         elements[i].classList.add("visible");
+        document.getElementById('nav'+i).classList.add('visible')
+       }
+   
+    // Else-Bedinung entfernen, um .visible nicht wieder zu löschen, wenn das Element den Viewport verlässt.
+     else {
+         document.getElementById('nav' + i).classList.remove('visible');
+         elements[i].classList.remove("visible");
+     }
+    }
+   }
+    
+   window.addEventListener("load", callbackFunc);
+   window.addEventListener("scroll", callbackFunc);
 
 
 // Scroll to anchor ID using scrollTO event
