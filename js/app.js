@@ -23,6 +23,8 @@ const menu_elements = document.querySelectorAll('section');
 
 var menu_element_ids = [];
 
+let debug_mode = false;
+
 
 
 
@@ -32,7 +34,12 @@ var menu_element_ids = [];
  * 
 */
 
+function scrollTo(pos) 
+{
+    console.log("Scroll to element:" + pos);
+    window.scrollTo(0,pos);
 
+}
 
 /**
  * End Helper Functions
@@ -56,34 +63,51 @@ menu.classList.add('navbar__menu');
 
 for (let i=0; i < menu_elements.length; i++) {
     var node = document.createElement('LI');
-    var link = document.createElement('A');
     var textnode = document.createTextNode(menu_elements[i].getAttribute('data-nav'));
-    console.log(textnode);
-    node.appendChild(link);
-    link.appendChild(textnode);
-    
+        
+    node.appendChild(textnode);
     node.classList.add('menu__link');
     node.setAttribute('id', 'nav'+i);
-    link.setAttribute('href', '#section' + (i+1));
+
+    //apply on-click event on li-element for call the scroll function
+    let rect = menu_elements[i].getBoundingClientRect();
+    var y_pos = rect.top;
+      
+    node.setAttribute('onclick', `scrollTo(${y_pos})`);
 
 
+    
     menu.appendChild(node);
     
     menu_element_ids.push('section' + i);
+
+ 
+    
+
+
+
 }
-
-
-
-
-
-
-
 
 
 // ======================================================= //
 // Add class 'active' to section when near top of viewport //
 // ======================================================= //
 
+
+// Log coordinates in Frontend
+if (debug_mode) {
+    document.getElementById("#debug_area").style.display = "inline-flex";
+}
+
+else {document.getElementById("#debug_area").style.display = "none";}
+
+function showCoordinates (element) {
+    var rect = element.getBoundingClientRect();
+    var y_id = document.getElementById("#y1");
+    y_id.innerHTML = rect.top;
+}
+
+// Check if element is in viewport
 function isElementInViewport(element) {
     var rect = element.getBoundingClientRect();
     return (
@@ -99,15 +123,18 @@ function isElementInViewport(element) {
    function callbackFunc() {
     for (var i = 0; i < elements.length; i++) {
      if (isElementInViewport(elements[i])) {
-         elements[i].classList.add("visible");
+        elements[i].classList.add("visible");
         document.getElementById('nav'+i).classList.add('visible')
        }
+       
+    
    
     // Else-statement for clearing the .visible if element leaves viewport
      else {
          document.getElementById('nav' + i).classList.remove('visible');
          elements[i].classList.remove("visible");
      }
+     showCoordinates(elements[i]);
     }
    }
     
@@ -129,5 +156,3 @@ function isElementInViewport(element) {
 // Scroll to section on link click
 
 // Set sections as active
-
-

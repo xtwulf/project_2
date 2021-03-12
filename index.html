@@ -17,9 +17,22 @@
   <!-- HTML Follows BEM naming conventions 
   IDs are only used for sections to connect menu achors to sections -->
   <header class="page__header">
+    <!-- Div for debugging coordinates. activated by setting debug = true in app.js -->
+    <div id="#debug_area" style="color: red;">
+      <p style="color:red">
+        Sec. 1:
+        <span id="#x1"></span>/<span id="#y1"></span> 
+        
+      </p>
+      <!-- <div id="#x"></div>
+      <div id="#y"></div> -->
+    </div>
+
+
     <nav class="navbar__menu">
       <!-- Navigation starts as empty UL that will be populated with JS -->
       <ul id="navbar__list">
+        
       </ul>
     </nav>
 
