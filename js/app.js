@@ -43,30 +43,46 @@ var menu_element_ids = [];
 // build the nav
 
 
-const menu = document.getElementById('navbar__list');
+// ======================================== //
+// Adding the style class to the ul Element //
+// ======================================== //
 
-// Adding the style class to the ul Element
+const menu = document.getElementById('navbar__list');
 menu.classList.add('navbar__menu');
 
-// create LI nodes
+// =============== //
+// create LI nodes //
+// =============== //
 
 for (let i=0; i < menu_elements.length; i++) {
     var node = document.createElement('LI');
+    var link = document.createElement('A');
     var textnode = document.createTextNode(menu_elements[i].getAttribute('data-nav'));
-    node.appendChild(textnode);
+    console.log(textnode);
+    node.appendChild(link);
+    link.appendChild(textnode);
+    
     node.classList.add('menu__link');
     node.setAttribute('id', 'nav'+i);
+    link.setAttribute('href', '#section' + (i+1));
+
 
     menu.appendChild(node);
     
     menu_element_ids.push('section' + i);
-
 }
 
 
-// Add class 'active' to section when near top of viewport
 
 
+
+
+
+
+
+// ======================================================= //
+// Add class 'active' to section when near top of viewport //
+// ======================================================= //
 
 function isElementInViewport(element) {
     var rect = element.getBoundingClientRect();
@@ -87,7 +103,7 @@ function isElementInViewport(element) {
         document.getElementById('nav'+i).classList.add('visible')
        }
    
-    // Else-Bedinung entfernen, um .visible nicht wieder zu löschen, wenn das Element den Viewport verlässt.
+    // Else-statement for clearing the .visible if element leaves viewport
      else {
          document.getElementById('nav' + i).classList.remove('visible');
          elements[i].classList.remove("visible");
