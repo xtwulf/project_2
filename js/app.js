@@ -18,6 +18,13 @@
  * 
 */
 
+/* getting all section elements for the menu */
+const menu_elements = document.querySelectorAll('section');
+
+
+
+
+
 
 /**
  * End Global Variables
@@ -35,6 +42,25 @@
 
 // build the nav
 
+
+const menu = document.getElementById('navbar__list');
+
+// Adding the style class to the ul Element
+menu.classList.add('navbar__menu');
+
+// create LI nodes
+
+for (let i=0; i < menu_elements.length; i++) {
+    var node = document.createElement('LI');
+    var textnode = document.createTextNode(menu_elements[i].getAttribute('data-nav'));
+    node.appendChild(textnode);
+    node.classList.add('menu__link');
+
+    menu.appendChild(node);
+
+}
+
+console.log(menu);
 
 // Add class 'active' to section when near top of viewport
 
