@@ -19,18 +19,15 @@
 */
 
 /* getting all section elements for the menu */
+const menu = document.getElementById('navbar__list');
 const menu_elements = document.querySelectorAll('section');
 
-var menu_element_ids = [];
-var menu_element_pos = [];
-let debug_mode = false;
 
+//let menu_element_ids = [];
+let menu_element_pos = [];
+let debug_mode = true;
 let scrollOptions;
-
 let correction_y = 200;
-
-
-
 
 /**
  * End Global Variables
@@ -41,11 +38,7 @@ let correction_y = 200;
 function getCoords(i) {
     console.log("section"+i+" ",elements[i].getBoundingClientRect().top);
     el = elements[i].getBoundingClientRect().top;
-    // window.scrollTo(0,0);
-
     window.scrollTo(0,el-pageYOffset+correction_y);
-  
-    // console.log((box.top + pageYOffset) + " ", box.left + pageXOffset);
   }
 
 
@@ -57,17 +50,25 @@ function scrollToElement(i) {
         behavior: 'smooth'
       }
     window.scrollTo(scrollOptions);
-    console.log("scroll to y:",y_pos);   
+/*     console.log("scroll to y:",y_pos);   
     console.log(menu_element_pos);
-    console.log("Nav-Height: ", getNavHeight());
+    console.log("Nav-Height: ", getNavHeight()); */
 }
 
+// returns the height of nav-element for the correction factor
 function getNavHeight() {
-    var el = document.getElementById('navigation');
-    var nav_height = el.getBoundingClientRect().height;
-
+    let el = document.getElementById('navigation');
+    let nav_height = el.getBoundingClientRect().height;
     return (nav_height);
+}
 
+function isElementInViewport(element) {
+    let rect = element.getBoundingClientRect();
+    // console.log(rect.top >= 0 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight));
+
+    return (
+        rect.top >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight));
 }
 
 /**
@@ -76,25 +77,25 @@ function getNavHeight() {
  * 
 */
 
-// build the nav
 
 
 // ======================================== //
 // Adding the style class to the ul Element //
 // ======================================== //
 
-const menu = document.getElementById('navbar__list');
 menu.classList.add('navbar__menu');
 
-// =============== //
-// create LI nodes //
-// =============== //
+
+
 
 for (let i=0; i < menu_elements.length; i++) {
-    var node = document.createElement('LI');
-    var textnode = document.createTextNode(menu_elements[i].getAttribute('data-nav'));
-        
-    node.appendChild(textnode);
+    // create LI nodes //
+    let node = document.createElement('LI');
+    let textnode = document.createTextNode(menu_elements[i].getAttribute('data-nav'));
+      
+    node.appendChild(textnode);       
+    menu.appendChild(node);
+
     node.classList.add('menu__link');
     node.setAttribute('id', 'nav'+i);
 
@@ -103,12 +104,8 @@ for (let i=0; i < menu_elements.length; i++) {
     
     //apply on-click event on li-element for call the scroll function      
     node.setAttribute('onclick', 'scrollToElement('+i+')');
-
-
     
-    menu.appendChild(node);
-    
-    menu_element_ids.push('section' + i);
+    //menu_element_ids.push('section' + i);
 }
 
 
@@ -119,34 +116,40 @@ for (let i=0; i < menu_elements.length; i++) {
 
 
 // Check if element is in viewport
-function isElementInViewport(element) {
-    var rect = element.getBoundingClientRect();
+/* function isElementInViewport(element) {
+    let rect = element.getBoundingClientRect();
     return (
      rect.top >= 0 &&
      rect.left >= 0 &&
      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
     rect.right <= (window.innerWidth || document.documentElement.clientWidth)
     );
-   }
+   } */
+
+
    
-var elements = document.querySelectorAll(".section");
+let elements = document.querySelectorAll(".section");
     
 function callbackFunc() {
-for (var i = 0; i < elements.length; i++) {
+for (let i = 0; i < elements.length; i++) {
     if (isElementInViewport(elements[i])) {
-    elements[i].classList.add("visible");
+    //elements[i].classList.add("visible");
+    elements[i].classList.add("your-active-class");
     document.getElementById('nav'+i).classList.add('visible')
     }
     
     // Else-statement for clearing the .visible if element leaves viewport
     else {
         document.getElementById('nav' + i).classList.remove('visible');
-        elements[i].classList.remove("visible");
+        elements[i].classList.remove("your-active-class");
     }
 
     if (debug_mode) {
-        var rect = elements[i].getBoundingClientRect();
-        console.log(`Section ${i}:`, rect.top);
+        let rect = elements[i].getBoundingClientRect();
+        // console.log(`Section ${i} current y:`, rect.top);
+        if (isElementInViewport(elements[i])) {
+            console.log(elements[i]);
+        }
         }
     }
 }
