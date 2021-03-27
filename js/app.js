@@ -29,6 +29,8 @@ let correction_y = 200;
 let navbar = document.getElementById('page__header');
 let elements = document.querySelectorAll(".section");
 
+let scroll_button = document.getElementById("scroll_btn");
+
 
 /**
  * End Global Variables
@@ -42,15 +44,19 @@ function getCoords(i) {
   }
 
 // Scroll to anchor ID using scrollTO event
-
 function scrollToElement(i) {
     y_pos = menu_element_pos[i] - getNavHeight();
+    scrollToPos(y_pos);
+}
+
+function scrollToPos(y) {
     scrollOptions = {
         left: 0,
-        top: y_pos,
+        top: y,
         behavior: 'smooth'
       }
     window.scrollTo(scrollOptions);
+
 }
 
 // returns the height of nav-element for the correction factor
@@ -67,18 +73,18 @@ function isElementInViewport(element) {
         rect.bottom <= (window.innerHeight || document.documentElement.clientHeight));
 }
 
-function hide_menu() {
-    // hide Navbar when scrolling, show it after timeout 
-    console.log("scrolling hide menu");
-    // navbar.classList.remove('page__header');
 
-/* 
-    setTimeout(function () {
-        navbar.classList.add('page__header');
-        
-    }, 1000); */
+// display button when user scrolls out of defined area
+function scrollFunction() {
+    if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+      scroll_button.style.display = "block";
+    } else {
+      scroll_button.style.display = "none";
+    }
+  }
 
-    // fadeIn(navbar);
+function topFunction() {
+    scrollToPos(0);
 }
 
 function fadeIn(element) {
@@ -179,4 +185,5 @@ window.addEventListener("load", callbackFunc);
 //window.addEventListener("load", show_menu);
 window.addEventListener("scroll", callbackFunc);
 window.addEventListener("scroll", hide_menu);
+window.onscroll = function() {scrollFunction()};
 
