@@ -85,6 +85,7 @@ function scrollFunction() {
 
 function topFunction() {
     scrollToPos(0);
+
 }
 
 function fadeIn(element) {
@@ -113,15 +114,6 @@ function slide() {
     var slideSource = document.getElementById('slideSource');
     slideSource.classList.toggle('fade');
 }
-
-
-
-/**
- * End Helper Functions
- * Begin Main Functions
- * 
-*/
-
 
 
 // =============================================== //
@@ -181,9 +173,8 @@ function callbackFunc() {
 }
 }
     
+// Adding Event Listeners
 window.addEventListener("load", callbackFunc);
-//window.addEventListener("load", show_menu);
 window.addEventListener("scroll", callbackFunc);
-window.addEventListener("scroll", hide_menu);
 window.onscroll = function() {scrollFunction()};
 
