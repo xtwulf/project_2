@@ -57,7 +57,7 @@ main {
 
 section {
     position: relative;
-    min-height: 80vh;
+    /*min-height: 80vh;*/
     
 }
 
@@ -78,7 +78,6 @@ a {
 
 .navbar__menu li {
     display: inline-flex;
-    
 }
 
 .navbar__menu .menu__link {
@@ -87,7 +86,6 @@ a {
     font-weight: bold;
     text-decoration: none;
     color: #000;
-    
 }
 
 .navbar__menu .menu__link:hover {
@@ -95,6 +93,20 @@ a {
     color: #fff;
     transition: ease 0.3s all;
 }
+
+.navbar__menu .hide {
+    display: none;
+}
+
+.nav_element_active {
+    color: red;
+}
+
+.menu__link.nav_element_active {
+    border-left: solid 2px red;
+    border-right: solid 2px red;
+}
+
 
 /* Header Styles */
 .page__header {
@@ -117,6 +129,39 @@ a {
 }
 
 
+/* ---- Buttons ---- */ 
+
+/* scroll button */
+#scroll_btn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 10px;
+    z-index: 99;
+    border: solid 1px #cc1;
+    outline: none;
+    background: rgb(136,203,171);
+    /* background: linear-gradient(0deg, rgba(136,203,171,1) 0%, rgba(0,13,60,1) 100%);*/
+    
+    color: white;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 18px;
+  }
+
+  #scroll_btn:hover {
+    background-color: #555;
+  }
+
+
+.collapsible {
+    background-color: transparent;
+    border: none;
+    width: 100%;
+    text-align: left;
+}
+
 /* ---- Theme Rules ---- */
 /* Landing Container Styles */
 .landing__container {
@@ -124,10 +169,6 @@ a {
     text-align: left;
 }
 
-.visible {
-    background: lightcoral;
-    border: 1px solid red;
-}
 
 
 @media only screen and (min-width: 35em){
@@ -137,7 +178,7 @@ a {
     }
 }
 
-section:nth-of-type(even) .landing__container {
+section:nth-of-type(even) .landing__container .collapsible{
     margin-right: 0;
     margin-left: auto;
     text-align: right; 
@@ -209,8 +250,8 @@ section:nth-of-type(3n + 1) .landing__container::after {
 /* Note: your-active-class class is applied through javascript. You should update the class here and in the index.html to what you set in your javascript file.  */
 section.your-active-class {
     background: rgb(0, 0, 0);
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%);
-    border: solid 1px red;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 100%);
+    border: solid 1px red; 
 }
 
 section.your-active-class .landing__container::before {
@@ -237,3 +278,12 @@ section.your-active-class .landing__container::after {
 	}
 }
 
+/* Tyles for slide function 2 */
+#slideSource {
+    opacity: 1;
+    transition: opacity 1s; 
+  }
+  
+  #slideSource.fade {
+    opacity: 0;
+  }
