@@ -25,7 +25,7 @@ const menu_elements = document.querySelectorAll('section');
 let menu_element_pos = [];
 let debug_mode = false;
 let scrollOptions;
-let correction_y = 200;
+let correction_y = 50;
 let navbar = document.getElementById('page__header');
 let elements = document.querySelectorAll(".section");
 
@@ -38,13 +38,18 @@ let scroll_button = document.getElementById("scroll_btn");
  * 
 */
 
+/**
+* name: addCollapsible
+* description:
+* - adds the collapsible function on every element with the class name "collapsible"
+* - the function itself sets the display style to none/block depending on the current style.
+*/
 function addCollapsible () {
     let collapsible = document.getElementsByClassName('collapsible');
 
     for (i=0; i < collapsible.length; i++) {
         collapsible[i].addEventListener('click', function() {
             this.classList.toggle('active');
-            console.log(this);
             var content = this.nextElementSibling;
             if (content.style.display === 'block') {
                 content.style.display = "none";
@@ -57,7 +62,7 @@ function addCollapsible () {
             let nextSibling = current.nextElementSibling;
 
             while(nextSibling) {
-            console.log(nextSibling);
+            
             nextSibling = nextSibling.nextElementSibling;
 }
         });
@@ -65,15 +70,21 @@ function addCollapsible () {
     }
 }
 
+/* 
 function getCoords(i) {
     el = elements[i].getBoundingClientRect().top;
     window.scrollTo(0,el-pageYOffset+correction_y);
-  }
+  } */
 
-// Scroll to anchor ID using scrollTO event
+/**
+* name: scrollToElement
+* parameter: i 
+* dScroll to anchor ID using scrollTO event
+*/
 function scrollToElement(i) {
-    y_pos = menu_element_pos[i] - getNavHeight();
+    y_pos = menu_element_pos[i] - getNavHeight() + (i*correction_y);
     scrollToPos(y_pos);
+    console.log("scroll to:", y_pos);
 }
 
 function scrollToPos(y) {
