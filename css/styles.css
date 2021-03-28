@@ -57,7 +57,7 @@ main {
 
 section {
     position: relative;
-    min-height: 80vh;
+    /*min-height: 80vh;*/
     
 }
 
@@ -128,6 +128,9 @@ a {
     color: #fff;
 }
 
+
+/* ---- Buttons ---- */ 
+
 /* scroll button */
 #scroll_btn {
     display: none;
@@ -152,6 +155,13 @@ a {
   }
 
 
+.collapsible {
+    background-color: transparent;
+    border: none;
+    width: 100%;
+    text-align: left;
+}
+
 /* ---- Theme Rules ---- */
 /* Landing Container Styles */
 .landing__container {
@@ -168,7 +178,7 @@ a {
     }
 }
 
-section:nth-of-type(even) .landing__container {
+section:nth-of-type(even) .landing__container .collapsible{
     margin-right: 0;
     margin-left: auto;
     text-align: right; 

@@ -38,6 +38,33 @@ let scroll_button = document.getElementById("scroll_btn");
  * 
 */
 
+function addCollapsible () {
+    let collapsible = document.getElementsByClassName('collapsible');
+
+    for (i=0; i < collapsible.length; i++) {
+        collapsible[i].addEventListener('click', function() {
+            this.classList.toggle('active');
+            console.log(this);
+            var content = this.nextElementSibling;
+            if (content.style.display === 'block') {
+                content.style.display = "none";
+            }
+            else {
+                content.style.display = "block";
+            }
+
+            let current = document.getElementsByClassName("collapsible");
+            let nextSibling = current.nextElementSibling;
+
+            while(nextSibling) {
+            console.log(nextSibling);
+            nextSibling = nextSibling.nextElementSibling;
+}
+        });
+
+    }
+}
+
 function getCoords(i) {
     el = elements[i].getBoundingClientRect().top;
     window.scrollTo(0,el-pageYOffset+correction_y);
@@ -148,7 +175,7 @@ for (let i=0; i < menu_elements.length; i++) {
 
        
 function callbackFunc() {
-    console.log("callbackFunc");
+    // console.log("callbackFunc");
     
     for (let i = 0; i < elements.length; i++) {
         let active_nav = "nav"+i;
@@ -177,4 +204,5 @@ function callbackFunc() {
 window.addEventListener("load", callbackFunc);
 window.addEventListener("scroll", callbackFunc);
 window.onscroll = function() {scrollFunction()};
+window.addEventListener('load', addCollapsible);
 
