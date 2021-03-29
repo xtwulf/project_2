@@ -70,11 +70,14 @@ function addCollapsible () {
     }
 }
 
-/* 
+
 function getCoords(i) {
     el = elements[i].getBoundingClientRect().top;
-    window.scrollTo(0,el-pageYOffset+correction_y);
-  } */
+    // window.scrollTo(0,el-pageYOffset+correction_y);
+    console.log("element ",i,el);
+  }
+
+
 
 /**
 * name: scrollToElement
@@ -82,9 +85,12 @@ function getCoords(i) {
 * dScroll to anchor ID using scrollTO event
 */
 function scrollToElement(i) {
+    console.log(menu_elements[i].getBoundingClientRect().top);
     y_pos = menu_element_pos[i] - getNavHeight() + (i*correction_y);
     scrollToPos(y_pos);
     console.log("scroll to:", y_pos);
+    console.log(menu_elements[i].getBoundingClientRect().top);
+    
 }
 
 function scrollToPos(y) {
@@ -178,6 +184,12 @@ for (let i=0; i < menu_elements.length; i++) {
     
     //apply on-click event on li-element for call the scroll function      
     node.setAttribute('onclick', 'scrollToElement('+i+')');
+
+    //ad function for debugging the y-coordinates
+    let el = document.getElementById('nav'+i);
+
+    el.addEventListener('mouseover', getCoords(i));
+
 }
 
 // ======================================================================= //
