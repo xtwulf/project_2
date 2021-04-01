@@ -25,10 +25,8 @@ const menu_elements = document.querySelectorAll('section');
 let menu_element_pos = [];
 let debug_mode = false;
 let scrollOptions;
-let correction_y = 50;
 let navbar = document.getElementById('page__header');
 let elements = document.querySelectorAll(".section");
-
 let scroll_button = document.getElementById("scroll_btn");
 
 
@@ -70,38 +68,23 @@ function addCollapsible () {
     }
 }
 
-/* 
+
 function getCoords(i) {
     el = elements[i].getBoundingClientRect().top;
-    window.scrollTo(0,el-pageYOffset+correction_y);
-  } */
+    console.log("element ",i,el);
+  }
+
+
 
 /**
 * name: scrollToElement
 * parameter: i 
-* dScroll to anchor ID using scrollTO event
+* Scroll to anchor ID using scrollIntoView
 */
 function scrollToElement(i) {
-    y_pos = menu_element_pos[i] - getNavHeight() + (i*correction_y);
-    scrollToPos(y_pos);
-    console.log("scroll to:", y_pos);
-}
-
-function scrollToPos(y) {
-    scrollOptions = {
-        left: 0,
-        top: y,
-        behavior: 'smooth'
-      }
-    window.scrollTo(scrollOptions);
-
-}
-
-// returns the height of nav-element for the correction factor
-function getNavHeight() {
-    let el = document.getElementById('navigation');
-    let nav_height = el.getBoundingClientRect().height;
-    return (nav_height);
+    let el = document.getElementById('section'+(i+1));
+    el.scrollIntoView({behavior: "smooth", block: "start", inline: "start"});
+ 
 }
 
 function isElementInViewport(element) {
@@ -126,33 +109,11 @@ function topFunction() {
 
 }
 
-function fadeIn(element) {
-    setTimeout()
-    var opacity = 0;
-    var intervalID = setInterval(function() {
-
-        if (opacity < 1) {
-            opacity = opacity + 0.05
-            element.style.opacity = opacity;
-        } else {
-            clearInterval(intervalID);
-        }
-    }, 10);
-
-    element.classList.add('page__header');
-}
 
 function show_menu() {
     navbar.classList.add('page__header');
 }
     
-
-//Slide function 2
-function slide() {
-    var slideSource = document.getElementById('slideSource');
-    slideSource.classList.toggle('fade');
-}
-
 
 // =============================================== //
 // Building the menu and doing other useful things //
@@ -178,6 +139,12 @@ for (let i=0; i < menu_elements.length; i++) {
     
     //apply on-click event on li-element for call the scroll function      
     node.setAttribute('onclick', 'scrollToElement('+i+')');
+
+    //ad function for debugging the y-coordinates
+    let el = document.getElementById('nav'+i);
+
+    el.addEventListener('mouseover', getCoords(i));
+
 }
 
 // ======================================================================= //
@@ -185,9 +152,7 @@ for (let i=0; i < menu_elements.length; i++) {
 // ======================================================================= //
 
        
-function callbackFunc() {
-    // console.log("callbackFunc");
-    
+function callbackFunc() { 
     for (let i = 0; i < elements.length; i++) {
         let active_nav = "nav"+i;
         if (isElementInViewport(elements[i])) {
