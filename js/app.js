@@ -28,6 +28,7 @@ let scrollOptions;
 let navbar = document.getElementById('page__header');
 let elements = document.querySelectorAll(".section");
 let scroll_button = document.getElementById("scroll_btn");
+let range_top = range_bottom = 300 // defines the range in which the elemnt will be set to visible
 
 
 /**
@@ -90,8 +91,8 @@ function scrollToElement(i) {
 function isElementInViewport(element) {
     let rect = element.getBoundingClientRect();
     return (
-        rect.top >= 0 &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight));
+        rect.top >= -range_top &&
+        rect.bottom <= ((window.innerHeight+range_bottom) || (document.documentElement.clientHeight)+range_bottom));
 }
 
 
